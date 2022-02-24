@@ -26,7 +26,6 @@ import androidx.preference.PreferenceManager;
 
 import org.aosp.device.DeviceSettings.Doze.DozeUtils;
 import org.aosp.device.DeviceSettings.ModeSwitch.*;
-import org.aosp.device.DeviceSettings.Services.FPSInfoService;
 import org.aosp.device.DeviceSettings.Utils.Utils;
 
 public class Startup extends BroadcastReceiver {
@@ -45,10 +44,6 @@ public class Startup extends BroadcastReceiver {
         enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_DC_SWITCH, false);
         if (enabled) {
             restore(DCModeSwitch.getFile(), enabled);
-        }
-        enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_FPS_INFO, false);
-        if (enabled) {
-            context.startService(new Intent(context, FPSInfoService.class));
         }
         enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_GAME_SWITCH, false);
         if (enabled) {

@@ -38,7 +38,6 @@ import org.aosp.device.DeviceSettings.Preference.CustomSeekBarPreference;
 import org.aosp.device.DeviceSettings.Preference.SwitchPreference;
 import org.aosp.device.DeviceSettings.Preference.VibratorStrengthPreference;
 import org.aosp.device.DeviceSettings.Services.VolumeService;
-import org.aosp.device.DeviceSettings.Services.FPSInfoService;
 import org.aosp.device.DeviceSettings.Utils.*;
 
 public class DeviceSettings extends PreferenceFragment
@@ -49,10 +48,6 @@ public class DeviceSettings extends PreferenceFragment
     public static final String KEY_AUTO_HBM_THRESHOLD = "auto_hbm_threshold";
     public static final String KEY_DC_SWITCH = "dc";
     public static final String KEY_HBM_SWITCH = "hbm";
-    public static final String KEY_FPS_INFO = "fps_info";
-    public static final String KEY_FPS_INFO_POSITION = "fps_info_position";
-    public static final String KEY_FPS_INFO_COLOR = "fps_info_color";
-    public static final String KEY_FPS_INFO_TEXT_SIZE = "fps_info_text_size";
     public static final String KEY_GAME_SWITCH = "game_mode";
     public static final String KEY_EDGE_TOUCH = "edge_touch";
     public static final String KEY_VIBSTRENGTH = "vib_strength";
@@ -66,9 +61,6 @@ public class DeviceSettings extends PreferenceFragment
     private DolbySwitch mDolbySwitch;
     private Preference mDozeSettings;
 
-    private static SwitchPreference mFpsInfo;
-    private static ListPreference mFpsInfoPosition;
-    private static ListPreference mFpsInfoColor;
     private static ListPreference mNrModeSwitcher;
     private static TwoStatePreference mDCModeSwitch;
     private static TwoStatePreference mHBMModeSwitch;
@@ -79,7 +71,6 @@ public class DeviceSettings extends PreferenceFragment
     private static TwoStatePreference mEnableDolbyAtmos;
 
     private VibratorStrengthPreference mVibratorStrengthPreference;
-    private CustomSeekBarPreference mFpsInfoTextSizePreference;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -116,19 +107,6 @@ public class DeviceSettings extends PreferenceFragment
             return true;
         });
 
-        mFpsInfo = (SwitchPreference) findPreference(KEY_FPS_INFO);
-        mFpsInfo.setChecked(isFPSOverlayRunning());
-        mFpsInfo.setOnPreferenceChangeListener(this);
-
-        mFpsInfoPosition = (ListPreference) findPreference(KEY_FPS_INFO_POSITION);
-        mFpsInfoPosition.setOnPreferenceChangeListener(this);
-
-        mFpsInfoColor = (ListPreference) findPreference(KEY_FPS_INFO_COLOR);
-        mFpsInfoColor.setOnPreferenceChangeListener(this);
-
-        mFpsInfoTextSizePreference = (CustomSeekBarPreference) findPreference(KEY_FPS_INFO_TEXT_SIZE);
-        mFpsInfoTextSizePreference.setOnPreferenceChangeListener(this);
-
         mGameModeSwitch = (TwoStatePreference) findPreference(KEY_GAME_SWITCH);
         if (GameModeSwitch.isSupported()) {
             mGameModeSwitch.setEnabled(true);
@@ -163,14 +141,6 @@ public class DeviceSettings extends PreferenceFragment
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getContext());
-        mHBMModeSwitch.setChecked(HBMModeSwitch.isCurrentlyEnabled(this.getContext()));
-        mFpsInfo.setChecked(isFPSOverlayRunning());
-    }
-
-    @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
           if (preference == mMuteMedia) {
             Boolean enabled = (Boolean) newValue;
@@ -192,41 +162,6 @@ public class DeviceSettings extends PreferenceFragment
             }
         } else if (preference == mEnableDolbyAtmos) {
             mDolbySwitch.setEnabled((Boolean) newValue);
-        } else if (preference == mFpsInfo) {
-            boolean enabled = (Boolean) newValue;
-            Intent fpsinfo = new Intent(this.getContext(), FPSInfoService.class);
-            if (enabled) {
-                this.getContext().startService(fpsinfo);
-            } else {
-                this.getContext().stopService(fpsinfo);
-            }
-        } else if (preference == mFpsInfoPosition) {
-            int position = Integer.parseInt(newValue.toString());
-            Context mContext = getContext();
-            if (FPSInfoService.isPositionChanged(mContext, position)) {
-                FPSInfoService.setPosition(mContext, position);
-                if (isFPSOverlayRunning()) {
-                    restartFpsInfo(mContext);
-                }
-            }
-        } else if (preference == mFpsInfoColor) {
-            int color = Integer.parseInt(newValue.toString());
-            Context mContext = getContext();
-            if (FPSInfoService.isColorChanged(mContext, color)) {
-                FPSInfoService.setColorIndex(mContext, color);
-                if (isFPSOverlayRunning()) {
-                    restartFpsInfo(mContext);
-                }
-            }
-        } else if (preference == mFpsInfoTextSizePreference) {
-            int size = Integer.parseInt(newValue.toString());
-            Context mContext = getContext();
-            if (FPSInfoService.isSizeChanged(mContext, size - 1)) {
-                FPSInfoService.setSizeIndex(mContext, size - 1);
-                if (isFPSOverlayRunning()) {
-                    restartFpsInfo(mContext);
-                }
-            }
         } else if (preference == mVibratorStrengthPreference) {
     	    int value = Integer.parseInt(newValue.toString());
             SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
@@ -252,21 +187,5 @@ public class DeviceSettings extends PreferenceFragment
                 Integer.parseInt(Utils.getFileValue(FILE_LEVEL, DEFAULT)));
             Utils.writeValue(FILE_LEVEL, String.valueOf(value));
         }
-    }
-
-    private boolean isFPSOverlayRunning() {
-        ActivityManager am = (ActivityManager) getContext().getSystemService(
-                Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service :
-                am.getRunningServices(Integer.MAX_VALUE))
-            if (FPSInfoService.class.getName().equals(service.service.getClassName()))
-                return true;
-        return false;
-   }
-
-    private void restartFpsInfo(Context context) {
-        Intent fpsinfo = new Intent(context, FPSInfoService.class);
-        context.stopService(fpsinfo);
-        context.startService(fpsinfo);
     }
 }
