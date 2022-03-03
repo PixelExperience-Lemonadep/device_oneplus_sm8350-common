@@ -20,7 +20,8 @@
     <!-- Alert Slider -->
     <string name="slider_title">Alert Slider</string>
     <string name="mute_media_title">Silenciar volumen multimedia en modo silencioso</string>
-    <string name="mute_media_summary">Sólo tendrá efecto para el altavoz</string>
+    <string name="mute_media_summary">Apague el volumen multimedia cuando el control deslizante de alerta esté en silencio</string>
+    <string name="mute_media_warning">Sólo tendrá efecto para el altavoz</string>
     <!-- Display Modes -->
     <string name="display_title">Modos de visualización</string>
     <string name="hbm_mode_summary">Activa instantáneamente la iluminación máxima de la pantalla</string>
@@ -34,13 +35,11 @@
     <string name="dc_mode_title">Atenuación de CC automática</string>
     <!-- Dolby -->
     <string name="dolby_category">Dolby</string>
-    <string name="enable_dolby_title">Dolby Atmos</string>
-    <string name="enable_dolby_summary">El cambio requiere reiniciar para que surta efecto</string>
-    <string name="dolby_title">Configuration</string>
-    <string name="dolby_summary">Configure the audio output based on media content</string>
+    <string name="dolby_title">Dolby Atmos</string>
+    <string name="dolby_summary">Configure la salida de audio según el contenido multimedia</string>
     <!-- Doze -->
     <string name="doze_panel_title">Doze</string>
-    <string name="ambient_display_gestures_title">Gestos de pantalla ambiente</string>
+    <string name="ambient_display_gestures_title">Pantalla ambiente</string>
     <string name="ambient_display_gestures_summary">Gestos adicionales para activar la pantalla</string>
     <string name="doze_settings_help_title">Ayuda</string>
     <string name="doze_settings_help_text">Estas características usan eventos del sensor para lanzar un pulso de notificación de doze. El sensor seleccionado solo está activado cuando el dispositivo recibe una notificación, lo que ayuda a reducir el uso de la batería. También hay una opción para habilitar el sensor seleccionado tan pronto como la pantalla se apague y esto causará un mayor uso de la batería.</string>
@@ -70,13 +69,26 @@
     <string name="fps_info_color_black">Negra</string>
     <string name="fps_info_color_accent">Seguir el sistema</string>
     <string name="fps_info_position_title">Posición de superposición</string>
-    <string name="fps_info_position_top_left">Top left</string>
-    <string name="fps_info_position_top_center">Top center</string>
-    <string name="fps_info_position_top_right">Top right</string>
-    <string name="fps_info_position_bottom_left">Bottom left</string>
-    <string name="fps_info_position_bottom_center">Bottom center</string>
-    <string name="fps_info_position_bottom_right">Bottom right</string>
+    <string name="fps_info_position_top_left">Arriba a la derecha</string>
+    <string name="fps_info_position_top_center">Arriba en el centro</string>
+    <string name="fps_info_position_top_right">Arriba a la izquierda</string>
+    <string name="fps_info_position_bottom_left">Abajo a la izquierda</string>
+    <string name="fps_info_position_bottom_center">Abajo en el centro</string>
+    <string name="fps_info_position_bottom_right">Abajo a la derecha</string>
     <string name="fps_info_text_size_title">Tamano del texto</string>
+    <!-- Touchscreen gestures -->
+    <string name="screen_gestures_panel_title">Gestos</string>
+    <string name="touchscreen_gesture_settings_title">Gestos en la pantalla</string>
+    <string name="touchscreen_gesture_settings_summary">Realice varios gestos de pantalla táctil para acciones rápidas</string>
+    <!-- Network -->
+    <string name="network_title">Redes</string>
+    <string name="nr_mode_switcher_title">Modos 5G</string>
+    <string name="nsa_only">NSA</string>
+    <string name="sa_only">SA</string>
+    <string name="nsa_sa">NSA + SA</string>
+    <string name="nr_mode_switcher_warning">Vuelva a configurar después de reiniciar o cambiar la tarjeta SIM</string>
+    <string name="service_not_ready">El servicio no está listo, inténtalo de nuevo</string>
+    <string name="unavailable_sim_slot">No se puede obtener la ranura de datos móviles actual, inténtalo de nuevo</string>
     <!-- Log Tile -->
     <string name="quick_settings_log_tile_label">Registros</string>
     <string name="quick_settings_log_tile_dialog_title">Opciones</string>
@@ -85,7 +97,10 @@
     <string name="touchpanel_title">Panel táctil</string>
     <string name="game_mode_title">Modo de juego</string>
     <string name="game_mode_summary">Aumente la frecuencia de muestreo táctil para todas las aplicaciones</string>
-    <string name="game_mode_warning">Increases power consumption</string>
+    <string name="game_mode_warning">Incrementa el consumo de la batería</string>
+    <string name="edge_touch_title">Edge Touch</string>
+    <string name="edge_touch_summary">Mejora la experiencia multitáctil en los bordes de la pantalla en los juegos</string>
+    <string name="edge_touch_warning">Aumenta la posibilidad de contacto accidental</string>
     <!-- Unsupported feature -->
     <string name="unsupported_feature">Esta función no está disponible en el kernel actual</string>
     <!-- Vibration Strength -->
